@@ -72,7 +72,7 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Client::find($id)->update($request->all());
     }
 
     /**
