@@ -4,22 +4,22 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeProject\Repositories\ClientRepository;
-use CodeProject\Services\ClientService;
+use CodeProject\Repositories\ProjectRepository;
+use CodeProject\Services\ProjectService;
 
-class ClientController extends Controller
+class ProjectController extends Controller
 {
     /**
-    * @var ClientRepository
+    * @var ProjectRepository
     */
     private $repository;
 
     /**
-    * @var ClientService
+    * @var ProjectService
     */
     private $service;
 
-    public function __construct(ClientRepository $repository, ClientService $service)
+    public function __construct(ProjectRepository $repository, ProjectService $service)
     {
         $this->repository = $repository;
         $this->service = $service;
@@ -30,9 +30,9 @@ class ClientController extends Controller
      *
      * @return Response
      */
-    public function index(ClientRepository $repository)
+    public function index()
     {
-        return $this->repository->all();
+        return $this->repository->with(['owner', 'client'])->all();
     }
 
     /**
@@ -64,7 +64,7 @@ class ClientController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->find($id);
+        return $this->repository->with(['owner', 'client'])->find($id);
     }
 
     /**
