@@ -25,6 +25,42 @@ class ClientService
         $this->validator = $validator;
     }
 
+    public function all()
+    {
+        try {
+            return $this->repository->all();
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
+    public function find($id)
+    {
+        try {
+            return $this->repository->find($id);
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $this->repository->delete($id);
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
     public function create(array $data)
     {
     	try {
@@ -37,7 +73,12 @@ class ClientService
     			'error' => true,
     			'message' => $e->getMessageBag()
     		];
-    	}
+    	} catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
     }
 
     public function update(array $data, $id)
@@ -52,6 +93,11 @@ class ClientService
     			'error' => true,
     			'message' => $e->getMessageBag()
     		];
-    	}
+    	} catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
     }
 }

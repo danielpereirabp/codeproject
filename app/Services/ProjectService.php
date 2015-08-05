@@ -25,6 +25,42 @@ class ProjectService
         $this->validator = $validator;
     }
 
+    public function all()
+    {
+        try {
+            return $this->repository->with(['owner', 'client'])->all();
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
+    public function find($id)
+    {
+        try {
+            return $this->repository->with(['owner', 'client'])->find($id);
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
+    public function delete($id)
+    {
+        try {
+            $this->repository->delete($id);
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
     public function create(array $data)
     {
     	try {
