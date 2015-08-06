@@ -9,7 +9,7 @@ use Prettus\Validator\Exceptions\ValidatorException;
 
 class ClientService
 {
-	/**
+    /**
     * @var ClientRepository
     */
     private $repository;
@@ -52,7 +52,11 @@ class ClientService
     public function delete($id)
     {
         try {
+            $this->repository->find($id)->projects()->delete();
             $this->repository->delete($id);
+
+            return ['success' => true];
+
         } catch (\Exception $e) {
             return [
                 "error" => true,

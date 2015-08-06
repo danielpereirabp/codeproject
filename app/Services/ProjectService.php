@@ -53,6 +53,9 @@ class ProjectService
     {
         try {
             $this->repository->delete($id);
+
+            return ['success' => true];
+            
         } catch (\Exception $e) {
             return [
                 "error" => true,
