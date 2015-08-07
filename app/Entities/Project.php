@@ -25,4 +25,14 @@ class Project extends Model
     {
     	return $this->belongsTo(Client::class);
     }
+
+    public function notes()
+    {
+        return $this->hasMany(ProjectNote::class);
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'project_members');
+    }
 }
