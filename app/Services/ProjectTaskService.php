@@ -2,33 +2,33 @@
 
 namespace CodeProject\Services;
 
-use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Validators\ProjectValidator;
+use CodeProject\Repositories\ProjectTaskRepository;
+use CodeProject\Validators\ProjectTaskValidator;
 
 use Prettus\Validator\Exceptions\ValidatorException;
 
-class ProjectService
+class ProjectTaskService
 {
 	/**
-    * @var ProjectRepository
+    * @var ProjectTaskRepository
     */
     private $repository;
 
     /**
-    * @var ProjectValidator
+    * @var ProjectTaskValidator
     */
     private $validator;
 
-    public function __construct(ProjectRepository $repository, ProjectValidator $validator)
+    public function __construct(ProjectTaskRepository $repository, ProjectTaskValidator $validator)
     {
         $this->repository = $repository;
         $this->validator = $validator;
     }
 
-    public function all()
+    public function all($projectId)
     {
         try {
-            return $this->repository->with(['owner', 'client', 'members'])->all();
+            return $this->repository->findWhere(['project_id' => $projectId]);
         } catch (\Exception $e) {
             return [
                 "error" => true,
@@ -40,7 +40,7 @@ class ProjectService
     public function find($id)
     {
         try {
-            return $this->repository->with(['owner', 'client', 'members'])->find($id);
+            return $this->repository->find($id);
         } catch (\Exception $e) {
             return [
                 "error" => true,
@@ -92,17 +92,5 @@ class ProjectService
     			'message' => $e->getMessageBag()
     		];
     	}
-    }
-
-    public function members($id)
-    {
-        try {
-            return $this->repository->find($id)->members;
-        } catch (\Exception $e) {
-            return [
-                "error" => true,
-                "message" => $e->getMessage()
-            ];
-        }
     }
 }
