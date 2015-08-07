@@ -105,4 +105,48 @@ class ProjectService
             ];
         }
     }
+
+    public function addMember($projectId, $userId)
+    {
+        try {
+
+            $this->repository->find($projectId)->members()->attach($userId);
+
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
+    public function removeMember($projectId, $userId)
+    {
+        try {
+
+            $this->repository->find($projectId)->members()->detach($userId);
+
+            return ['success' => true];
+
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
+    public function isMember($projectId, $userId)
+    {
+        try {
+            return $this->repository->find($projectId)->members()->find($userId) ? ['success' => true] : ['success' => false];
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
 }

@@ -34,6 +34,9 @@ Route::put('client/{id}', 'ClientController@update');
 	Route::put('project/{projectId}/task/{id}', 'ProjectTaskController@update');
 
 	Route::get('project/{id}/members', 'ProjectController@members');
+	Route::post('project/{id}/member', 'ProjectController@addMember');
+	Route::delete('project/{id}/member/{userId}', 'ProjectController@removeMember');
+	Route::get('project/{id}/member/{userId}', 'ProjectController@isMember');
 
 Route::get('project', 'ProjectController@index');
 Route::post('project', 'ProjectController@store');
