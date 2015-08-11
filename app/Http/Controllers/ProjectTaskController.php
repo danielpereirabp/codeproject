@@ -64,7 +64,7 @@ class ProjectTaskController extends Controller
      */
     public function show($projectId, $id)
     {
-        return $this->service->find($id);
+        return $this->service->find($projectId, $id);
     }
 
     /**

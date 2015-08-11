@@ -59,12 +59,13 @@ class ProjectNoteController extends Controller
     /**
      * Display the specified resource.
      *
+     * @param  int  $projectId
      * @param  int  $id
      * @return Response
      */
     public function show($projectId, $id)
     {
-        return $this->service->find($id);
+        return $this->service->find($projectId, $id);
     }
 
     /**
