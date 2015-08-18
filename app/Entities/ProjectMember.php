@@ -12,7 +12,7 @@ class ProjectMember extends Model implements Transformable
 
     protected $fillable = [
     	'project_id',
-    	'user_id'
+    	'member_id'
     ];
 
     public $timestamps = false;
@@ -21,8 +21,8 @@ class ProjectMember extends Model implements Transformable
     {
         return $this->belongsTo(Project::class);
     }
-    
-    public function user()
+
+    public function member()
     {
         return $this->belongsTo(User::class);
     }
