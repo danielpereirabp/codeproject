@@ -8,7 +8,7 @@ use CodeProject\Repositories\ProjectRepository;
 use CodeProject\Services\ProjectService;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
-class ProjectController extends Controller
+class ProjectFileController extends Controller
 {
     /**
     * @var ProjectRepository
@@ -54,7 +54,18 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        return $this->service->create($request->all());
+        $file = $request->file('file');
+        $extension = $file->getClientOriginalExtension();
+
+        $data = [
+            'file' => $file,
+            'extension' => $extension,
+            'name' => $request->name,
+            'description' => $request->description,
+            'project_id' => $request->project_id
+        ];
+
+        return $this->service->createFile($data);
     }
 
     /**

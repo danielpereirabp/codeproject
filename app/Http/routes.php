@@ -46,6 +46,8 @@ Route::group(['middleware' => 'oauth'], function () {
         Route::delete('{id}/member/{userId}', 'ProjectController@removeMember');
         Route::get('{id}/member/{userId}', 'ProjectController@isMember');
 
+        Route::post('{projectId}/file', 'ProjectFileController@store');
+
     });
 
 });
