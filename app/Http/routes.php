@@ -15,31 +15,35 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('client', 'ClientController@index');
-Route::post('client', 'ClientController@store');
-Route::get('client/{id}', 'ClientController@show');
-Route::delete('client/{id}', 'ClientController@destroy');
-Route::put('client/{id}', 'ClientController@update');
+Route::post('oauth/access_token', function() {
+	return Response::json(Authorizer::issueAccessToken());
+});
 
-	Route::get('project/{projectId}/note', 'ProjectNoteController@index');
-	Route::post('project/{projectId}/note', 'ProjectNoteController@store');
-	Route::get('project/{projectId}/note/{id}', 'ProjectNoteController@show');
-	Route::delete('project/{projectId}/note/{id}', 'ProjectNoteController@destroy');
-	Route::put('project/{projectId}/note/{id}', 'ProjectNoteController@update');
+Route::group(['middleware' => 'oauth'], function () {
 
-	Route::get('project/{projectId}/task', 'ProjectTaskController@index');
-	Route::post('project/{projectId}/task', 'ProjectTaskController@store');
-	Route::get('project/{projectId}/task/{id}', 'ProjectTaskController@show');
-	Route::delete('project/{projectId}/task/{id}', 'ProjectTaskController@destroy');
-	Route::put('project/{projectId}/task/{id}', 'ProjectTaskController@update');
+    Route::resource('client', 'ClientController', ['except' => ['create', 'edit']]);
 
-	Route::get('project/{id}/members', 'ProjectController@members');
-	Route::post('project/{id}/member', 'ProjectController@addMember');
-	Route::delete('project/{id}/member/{userId}', 'ProjectController@removeMember');
-	Route::get('project/{id}/member/{userId}', 'ProjectController@isMember');
+    Route::resource('project', 'ProjectController', ['except' => ['create', 'edit']]);
 
-Route::get('project', 'ProjectController@index');
-Route::post('project', 'ProjectController@store');
-Route::get('project/{id}', 'ProjectController@show');
-Route::delete('project/{id}', 'ProjectController@destroy');
-Route::put('project/{id}', 'ProjectController@update');
+    Route::group(['prefix' => 'project'], function () {
+
+        Route::get('{projectId}/note', 'ProjectNoteController@index');
+        Route::post('{projectId}/note', 'ProjectNoteController@store');
+        Route::get('{projectId}/note/{id}', 'ProjectNoteController@show');
+        Route::delete('{projectId}/note/{id}', 'ProjectNoteController@destroy');
+        Route::put('{projectId}/note/{id}', 'ProjectNoteController@update');
+
+        Route::get('{projectId}/task', 'ProjectTaskController@index');
+        Route::post('{projectId}/task', 'ProjectTaskController@store');
+        Route::get('{projectId}/task/{id}', 'ProjectTaskController@show');
+        Route::delete('{projectId}/task/{id}', 'ProjectTaskController@destroy');
+        Route::put('{projectId}/task/{id}', 'ProjectTaskController@update');
+
+        Route::get('{id}/members', 'ProjectController@members');
+        Route::post('{id}/member', 'ProjectController@addMember');
+        Route::delete('{id}/member/{userId}', 'ProjectController@removeMember');
+        Route::get('{id}/member/{userId}', 'ProjectController@isMember');
+
+    });
+
+});
