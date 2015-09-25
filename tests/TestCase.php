@@ -22,4 +22,20 @@ class TestCase extends Illuminate\Foundation\Testing\TestCase
 
         return $app;
     }
+
+    public function setUp()
+    {
+        parent::setUp();
+        
+        Artisan::call('make:database');
+        Artisan::call('migrate');
+
+    }
+
+    public function tearDown()
+    {
+        Artisan::call('migrate:reset');
+
+        parent::tearDown();
+    }
 }
