@@ -14,6 +14,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         \CodeProject\Console\Commands\Inspire::class,
+        \CodeProject\Console\Commands\Database::class,
     ];
 
     /**

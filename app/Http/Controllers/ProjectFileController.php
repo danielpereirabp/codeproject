@@ -37,16 +37,6 @@ class ProjectFileController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
@@ -54,12 +44,9 @@ class ProjectFileController extends Controller
      */
     public function store(Request $request)
     {
-        $file = $request->file('file');
-        $extension = $file->getClientOriginalExtension();
-
         $data = [
-            'file' => $file,
-            'extension' => $extension,
+            'file' => $request->file('file'),
+            'extension' => $request->file('file')->getClientOriginalExtension(),
             'name' => $request->name,
             'description' => $request->description,
             'project_id' => $request->project_id
@@ -81,17 +68,6 @@ class ProjectFileController extends Controller
         }
 
         return $this->service->find($id);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -118,53 +94,6 @@ class ProjectFileController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->checkProjectOwner($id) == false) {
-            return ['error' => 'Access Forbidden'];
-        }
-
         return $this->service->delete($id);
-    }
-
-    public function members($id)
-    {
-        return $this->service->members($id);
-    }
-
-    public function addMember(Request $request, $id)
-    {
-        return $this->service->addMember($id, $request->get('user_id'));
-    }
-
-    public function removeMember(Request $request, $id, $userId)
-    {
-        return $this->service->removeMember($id, $userId);
-    }
-
-    public function isMember(Request $request, $id, $userId)
-    {
-        return $this->service->isMember($id, $userId);
-    }
-
-    private function checkProjectOwner($projectId)
-    {
-        $userId = Authorizer::getResourceOwnerId();
-
-        return $this->repository->skipPresenter()->isOwner($projectId, $userId);
-    }
-
-    private function checkProjectMember($projectId)
-    {
-        $userId = Authorizer::getResourceOwnerId();
-
-        return $this->repository->skipPresenter()->hasMember($projectId, $userId);
-    }
-
-    private function checkProjectPermissions($projectId)
-    {
-        if ($this->checkProjectOwner($projectId) or $this->checkProjectMember($projectId)) {
-            return true;
-        }
-
-        return false;
     }
 }

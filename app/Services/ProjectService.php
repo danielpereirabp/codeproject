@@ -8,6 +8,7 @@ use CodeProject\Validators\ProjectValidator;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Contracts\Filesystem\Factory as Storage;
 
+use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectService
@@ -82,7 +83,7 @@ class ProjectService
     public function create(array $data)
     {
     	try {
-    		$this->validator->with($data)->passesOrFail();
+    		$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
     		return $this->repository->create($data);
 
@@ -97,7 +98,7 @@ class ProjectService
     public function update(array $data, $id)
     {
     	try {
-    		$this->validator->with($data)->passesOrFail();
+    		$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
     		return $this->repository->update($data, $id);
 
