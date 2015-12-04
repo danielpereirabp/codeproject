@@ -6,14 +6,14 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class OAuth2Test extends TestCase
 {
-    /**
-     * A basic functional test example.
-     *
-     * @return void
-     */
-    public function test_success_authentication()
+    public function testShouldReturnSuccessAuthentication()
     {
-        DB::insert('insert into oauth_clients (id, secret, name) values (?, ?, ?)', ['appid1', 'secret', 'APP AngularJS']);
+        // DB::insert('insert into oauth_clients (id, secret, name) values (?, ?, ?)', ['appid1', 'secret', 'APP AngularJS']);
+        DB::table('oauth_clients')->insert([
+            'id' => 'appid1',
+            'secret' => 'secret',
+            'name' => 'APP AngularJS'
+        ]);
 
         factory(CodeProject\Entities\User::class)->create([
             'name' => 'Daniel Pereira',
@@ -34,14 +34,14 @@ class OAuth2Test extends TestCase
             ]);
     }
 
-    /**
-     * A basic functional test example.
-     *
-     * @return void
-     */
-    public function test_invalid_credentials()
+    public function testShouldReturnInvalidCredentials()
     {
-        DB::insert('insert into oauth_clients (id, secret, name) values (?, ?, ?)', ['appid1', 'secret', 'APP AngularJS']);
+        // DB::insert('insert into oauth_clients (id, secret, name) values (?, ?, ?)', ['appid1', 'secret', 'APP AngularJS']);
+        DB::table('oauth_clients')->insert([
+            'id' => 'appid1',
+            'secret' => 'secret',
+            'name' => 'APP AngularJS'
+        ]);
 
         factory(CodeProject\Entities\User::class)->create([
             'name' => 'Daniel Pereira',
@@ -62,11 +62,6 @@ class OAuth2Test extends TestCase
             ]);
     }
 
-    /**
-     * A basic functional test example.
-     *
-     * @return void
-     */
     public function invalid_client()
     {
         $this->post('/oauth/access_token', [

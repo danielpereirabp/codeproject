@@ -11,18 +11,12 @@ use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 class ProjectController extends Controller
 {
     /**
-    * @var ProjectRepository
-    */
-    private $repository;
-
-    /**
     * @var ProjectService
     */
     private $service;
 
-    public function __construct(ProjectRepository $repository, ProjectService $service)
+    public function __construct(ProjectService $service)
     {
-        $this->repository = $repository;
         $this->service = $service;
     }
 
@@ -55,10 +49,6 @@ class ProjectController extends Controller
      */
     public function show($id)
     {
-        if ($this->checkProjectPermissions($id) == false) {
-            return ['error' => 'Access Forbidden'];
-        }
-
         return $this->service->find($id);
     }
 
@@ -71,10 +61,6 @@ class ProjectController extends Controller
      */
     public function update(Request $request, $id)
     {
-        if ($this->checkProjectOwner($id) == false) {
-            return ['error' => 'Access Forbidden'];
-        }
-
         return $this->service->update($request->all(), $id);
     }
 
@@ -86,53 +72,6 @@ class ProjectController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->checkProjectOwner($id) == false) {
-            return ['error' => 'Access Forbidden'];
-        }
-
         return $this->service->delete($id);
-    }
-
-    public function members($id)
-    {
-        return $this->service->members($id);
-    }
-
-    public function addMember(Request $request, $id)
-    {
-        return $this->service->addMember($id, $request->get('user_id'));
-    }
-
-    public function removeMember(Request $request, $id, $userId)
-    {
-        return $this->service->removeMember($id, $userId);
-    }
-
-    public function isMember(Request $request, $id, $userId)
-    {
-        return $this->service->isMember($id, $userId);
-    }
-
-    private function checkProjectOwner($projectId)
-    {
-        $userId = Authorizer::getResourceOwnerId();
-
-        return $this->repository->skipPresenter()->isOwner($projectId, $userId);
-    }
-
-    private function checkProjectMember($projectId)
-    {
-        $userId = Authorizer::getResourceOwnerId();
-
-        return $this->repository->skipPresenter()->hasMember($projectId, $userId);
-    }
-
-    private function checkProjectPermissions($projectId)
-    {
-        if ($this->checkProjectOwner($projectId) or $this->checkProjectMember($projectId)) {
-            return true;
-        }
-
-        return false;
     }
 }

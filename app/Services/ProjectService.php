@@ -92,7 +92,12 @@ class ProjectService
     			'error' => true,
     			'message' => $e->getMessageBag()
     		];
-    	}
+    	} catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
     }
 
     public function update(array $data, $id)
@@ -107,58 +112,7 @@ class ProjectService
     			'error' => true,
     			'message' => $e->getMessageBag()
     		];
-    	}
-    }
-
-    public function members($id)
-    {
-        try {
-            return $this->repository->find($id)->members;
-        } catch (\Exception $e) {
-            return [
-                "error" => true,
-                "message" => $e->getMessage()
-            ];
-        }
-    }
-
-    public function addMember($projectId, $userId)
-    {
-        try {
-
-            $this->repository->find($projectId)->members()->attach($userId);
-
-            return ['success' => true];
-
-        } catch (\Exception $e) {
-            return [
-                "error" => true,
-                "message" => $e->getMessage()
-            ];
-        }
-    }
-
-    public function removeMember($projectId, $userId)
-    {
-        try {
-
-            $this->repository->find($projectId)->members()->detach($userId);
-
-            return ['success' => true];
-
-        } catch (\Exception $e) {
-            return [
-                "error" => true,
-                "message" => $e->getMessage()
-            ];
-        }
-    }
-
-    public function isMember($projectId, $userId)
-    {
-        try {
-            return $this->repository->find($projectId)->members()->find($userId) ? ['success' => true] : ['success' => false];
-        } catch (\Exception $e) {
+    	} catch (\Exception $e) {
             return [
                 "error" => true,
                 "message" => $e->getMessage()

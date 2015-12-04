@@ -29,7 +29,8 @@
     },
     "autoload-dev": {
         "classmap": [
-            "tests/TestCase.php"
+            "tests/TestCase.php",
+            "tests/Traits/"
         ]
     },
     "scripts": {
@@ -48,6 +49,9 @@
         ],
         "post-create-project-cmd": [
             "php artisan key:generate"
+        ],
+        "test": [
+            "vendor/bin/phpunit"
         ]
     },
     "config": {
