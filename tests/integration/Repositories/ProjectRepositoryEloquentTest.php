@@ -6,7 +6,7 @@ use CodeProject\Entities\Project;
 
 use CodeProject\Repositories\ProjectRepository;
 
-class ProjectRepositoryTest extends TestCase
+class ProjectRepositoryEloquentTest extends TestCase
 {
 	/**
     * @var Faker
