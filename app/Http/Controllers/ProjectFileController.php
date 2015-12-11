@@ -4,36 +4,18 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeProject\Repositories\ProjectRepository;
-use CodeProject\Services\ProjectService;
-use LucaDegasperi\OAuth2Server\Facades\Authorizer;
+use CodeProject\Services\ProjectFileService;
 
 class ProjectFileController extends Controller
 {
-    /**
-    * @var ProjectRepository
-    */
-    private $repository;
-
     /**
     * @var ProjectService
     */
     private $service;
 
-    public function __construct(ProjectRepository $repository, ProjectService $service)
+    public function __construct(ProjectFileService $service)
     {
-        $this->repository = $repository;
         $this->service = $service;
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
-    public function index()
-    {
-        return $this->service->all();
     }
 
     /**
@@ -52,38 +34,7 @@ class ProjectFileController extends Controller
             'project_id' => $request->project_id
         ];
 
-        return $this->service->createFile($data);
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function show($id)
-    {
-        if ($this->checkProjectPermissions($id) == false) {
-            return ['error' => 'Access Forbidden'];
-        }
-
-        return $this->service->find($id);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        if ($this->checkProjectOwner($id) == false) {
-            return ['error' => 'Access Forbidden'];
-        }
-
-        return $this->service->update($request->all(), $id);
+        return $this->service->create($data);
     }
 
     /**
