@@ -67,3 +67,12 @@ $factory->define(CodeProject\Entities\ProjectMember::class, function (Faker\Gene
         'member_id' => rand(1, 10),
     ];
 });
+
+$factory->define(CodeProject\Entities\ProjectFile::class, function (Faker\Generator $faker) {
+    return [
+        'project_id' => rand(1, 10),
+        'name' => $faker->word,
+        'description' => $faker->sentence,
+        'extension' => $faker->word
+    ];
+});

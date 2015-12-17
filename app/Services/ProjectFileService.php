@@ -70,7 +70,7 @@ class ProjectFileService
         try {
             $projectFile = $this->repository->skipPresenter()->find($id);
 
-            $this->storage->delete($id . "." . $model->extension);
+            $this->storage->delete($id . "." . $projectFile->extension);
 
             $this->repository->delete($id);
 
