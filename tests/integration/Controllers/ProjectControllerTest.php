@@ -49,9 +49,9 @@ class ProjectControllerTest extends TestCase
         ];
 
         $this->post('/project', $data)
-            ->seeJson([
-                'data' => []
-            ]);
+            ->seeJson($data);
+
+        $this->seeInDatabase('projects', $data);
     }
 
     /**

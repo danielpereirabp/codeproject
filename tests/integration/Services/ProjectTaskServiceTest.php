@@ -4,13 +4,11 @@ use CodeProject\Entities\User;
 use CodeProject\Entities\Client;
 use CodeProject\Entities\Project;
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
+use CodeProject\Services\ProjectTaskService;
 
-class ProjectTaskControllerTest extends TestCase
+class ProjectTaskServiceTest extends TestCase
 {
-    use WithoutMiddleware;
-
-    /**
+	/**
     * @var Faker
     */
     private $faker;
@@ -23,7 +21,7 @@ class ProjectTaskControllerTest extends TestCase
 
     }
 
-    public function testShouldAddOneTaskToTheProject()
+	public function testShouldAddOneTaskToTheProject()
     {
     	factory(User::class, 10)->create();
         factory(Client::class, 10)->create();
@@ -38,9 +36,10 @@ class ProjectTaskControllerTest extends TestCase
 	        'status' => rand(1, 3)
         ];
 
-        $this->post("project/{$project->id}/task", $data)
-            ->seeJson($data);
+        $service = App::make(ProjectTaskService::class);
+		$response = $service->create($data);
 
-        $this->seeInDatabase('project_tasks', $data);
+		$this->assertArrayHasKey('data', $response);
+		$this->assertArrayHasKey('project_id', $response['data']);
     }
 }

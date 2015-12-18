@@ -8,6 +8,21 @@ use CodeProject\Services\ProjectMemberService;
 
 class ProjectMemberServiceTest extends TestCase
 {
+	public function testShouldAddOneProjectMember()
+	{
+		factory(User::class, 10)->create();
+        factory(Client::class, 10)->create();
+
+        $project = factory(Project::class)->create();
+        $user = factory(User::class)->create();
+
+		$service = App::make(ProjectMemberService::class);
+		$response = $service->addMember(['project_id' => $project->id, 'user_id' => $user->id]);
+
+		$this->assertArrayHasKey('success', $response);
+		$this->assertTrue($response['success']);
+	}
+
 	public function testShouldTryRemoveAInvalidProjectMember()
 	{
 		factory(User::class, 10)->create();

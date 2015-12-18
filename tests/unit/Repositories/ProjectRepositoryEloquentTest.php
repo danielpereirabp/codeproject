@@ -1,12 +1,10 @@
 <?php
 
-namespace UnitTests;
+namespace CodeProject\Repositories;
 
 use CodeProject\Entities\User;
 use CodeProject\Entities\Client;
 use CodeProject\Entities\Project;
-
-use CodeProject\Repositories\ProjectRepositoryEloquent;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;

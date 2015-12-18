@@ -16,7 +16,7 @@ $factory->define(CodeProject\Entities\User::class, function (Faker\Generator $fa
         'name' => $faker->name,
         'email' => $faker->email,
         'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'remember_token' => str_random(10)
     ];
 });
 
@@ -27,7 +27,7 @@ $factory->define(CodeProject\Entities\Client::class, function (Faker\Generator $
         'email' => $faker->email,
         'phone' => $faker->phoneNumber,
         'address' => $faker->address,
-        'obs' => $faker->sentence,
+        'obs' => $faker->sentence
     ];
 });
 
@@ -39,7 +39,7 @@ $factory->define(CodeProject\Entities\Project::class, function (Faker\Generator 
         'description' => $faker->sentence,
         'progress' => rand(1, 100),
         'status' => rand(1, 3),
-        'due_date' => $faker->dateTime('now'),
+        'due_date' => $faker->dateTime('now')->format('Y-m-d')
     ];
 });
 
@@ -55,16 +55,16 @@ $factory->define(CodeProject\Entities\ProjectTask::class, function (Faker\Genera
     return [
         'project_id' => rand(1, 10),
         'name' => $faker->word,
-        'start_date' => $faker->dateTime('now'),
-        'due_date' => $faker->dateTime('now'),
-        'status' => rand(1, 3),
+        'start_date' => $faker->dateTime('now')->format('Y-m-d'),
+        'due_date' => $faker->dateTime('now')->format('Y-m-d'),
+        'status' => rand(1, 3)
     ];
 });
 
 $factory->define(CodeProject\Entities\ProjectMember::class, function (Faker\Generator $faker) {
     return [
         'project_id' => rand(1, 10),
-        'member_id' => rand(1, 10),
+        'member_id' => rand(1, 10)
     ];
 });
 

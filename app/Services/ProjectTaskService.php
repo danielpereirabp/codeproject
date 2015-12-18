@@ -72,11 +72,16 @@ class ProjectTaskService
     		return $this->repository->create($data);
 
     	} catch (ValidatorException $e) {
-    		return [
-    			'error' => true,
-    			'message' => $e->getMessageBag()
-    		];
-    	}
+            return [
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ];
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
     }
 
     public function update(array $data, $id)
@@ -87,10 +92,15 @@ class ProjectTaskService
     		return $this->repository->update($data, $id);
     		
     	} catch (ValidatorException $e) {
-    		return [
-    			'error' => true,
-    			'message' => $e->getMessageBag()
-    		];
-    	}
+            return [
+                'error' => true,
+                'message' => $e->getMessageBag()
+            ];
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
     }
 }
