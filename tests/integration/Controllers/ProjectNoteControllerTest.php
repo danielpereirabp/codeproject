@@ -41,4 +41,14 @@ class ProjectNoteControllerTest extends TestCase
 
         $this->seeInDatabase('project_notes', $data);
     }
+
+    public function testShouldListAllNotesOfProject()
+    {
+        //
+    }
+
+    public function testShouldRemoveOneNoteOfProject()
+    {
+        //
+    }
 }
