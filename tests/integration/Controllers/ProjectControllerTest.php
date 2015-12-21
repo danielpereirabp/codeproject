@@ -34,6 +34,25 @@ class ProjectControllerTest extends TestCase
 
     }
 
+    public function testShouldListAllProjects()
+    {
+        factory(User::class, 10)->create();
+        factory(Client::class, 10)->create();
+
+        $project1 = factory(Project::class)->create();
+        $project2 = factory(Project::class)->create();
+        $project3 = factory(Project::class)->create();
+
+        $jsonResponse = $this->call('GET', 'project')->getContent();
+        $responseData = json_decode($jsonResponse);
+
+        $this->assertCount(3, $responseData->data);
+
+        $this->seeInDatabase('projects', ['id' => $project1->id]);
+        $this->seeInDatabase('projects', ['id' => $project2->id]);
+        $this->seeInDatabase('projects', ['id' => $project3->id]);
+    }
+
     public function testShouldCreateOneProject()
     {
         $user = factory(User::class)->create();

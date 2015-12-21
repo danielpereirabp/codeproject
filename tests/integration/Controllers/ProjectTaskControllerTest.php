@@ -52,26 +52,61 @@ class ProjectTaskControllerTest extends TestCase
 
         $project = factory(Project::class)->create();
 
-        $task1 = factory(ProjectTask::class)->make();
-        $task2 = factory(ProjectTask::class)->make();
-        $task3 = factory(ProjectTask::class)->make();
+        $task1 = App::make(ProjectTask::class);
+        $task2 = App::make(ProjectTask::class);
+        $task3 = App::make(ProjectTask::class);
         
         $project->tasks()->save($task1);
         $project->tasks()->save($task2);
         $project->tasks()->save($task3);
 
-        // $this->get("project/{$project->id}/task")
-        //     ->seeJson([
-        //         'data' => []
-        //     ]);
+        $jsonResponse = $this->call('GET', "project/{$project->id}/task")->getContent();
+        $responseData = json_decode($jsonResponse);
 
-        // $this->seeInDatabase('project_tasks', $data);
-        // $this->seeInDatabase('project_tasks', $data);
-        // $this->seeInDatabase('project_tasks', $data);
+        $this->assertCount(3, $responseData->data);
     }
 
     public function testShouldRemoveOneTaskOfProject()
     {
-        //
+        factory(User::class, 10)->create();
+        factory(Client::class, 10)->create();
+
+        $project = factory(Project::class)->create();
+
+        $task1 = App::make(ProjectTask::class);
+        $task2 = App::make(ProjectTask::class);
+        $task3 = App::make(ProjectTask::class);
+        
+        $project->tasks()->save($task1);
+        $project->tasks()->save($task2);
+        $project->tasks()->save($task3);
+
+        $this->delete("project/{$project->id}/task/{$task2->id}")
+            ->seeJson([
+                'success' => true
+            ]);
+
+        $this->seeInDatabase('project_tasks', ['id' => $task1->id]);
+        $this->seeInDatabase('project_tasks', ['id' => $task3->id]);
+        $this->notSeeInDatabase('project_tasks', ['id' => $task2->id]);
+    }
+
+    public function testShouldShowOneProjectTask()
+    {
+        factory(User::class, 10)->create();
+        factory(Client::class, 10)->create();
+
+        $project = factory(Project::class)->create();
+
+        $task = App::make(ProjectTask::class);
+        $task->name = $this->faker->word;
+        
+        $project->tasks()->save($task);
+
+        $this->get("project/{$project->id}/task/{$task->id}")
+            ->seeJson([
+                'project_id' => "{$project->id}",
+                'name' => "{$task->name}",
+            ]);
     }
 }
