@@ -5,6 +5,7 @@ namespace CodeProject\Services;
 use CodeProject\Repositories\ProjectTaskRepository;
 use CodeProject\Validators\ProjectTaskValidator;
 
+use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectTaskService
@@ -67,7 +68,7 @@ class ProjectTaskService
     public function create(array $data)
     {
     	try {
-    		$this->validator->with($data)->passesOrFail();
+    		$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
     		return $this->repository->create($data);
 
@@ -87,7 +88,7 @@ class ProjectTaskService
     public function update(array $data, $id)
     {
     	try {
-    		$this->validator->with($data)->passesOrFail();
+    		$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
     		return $this->repository->update($data, $id);
     		

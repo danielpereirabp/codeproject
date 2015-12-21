@@ -107,4 +107,34 @@ class ProjectNoteControllerTest extends TestCase
                 'title' => "{$note->title}",
             ]);
     }
+
+    /**
+     * @dataProvider getNoteFields
+     */
+    public function testShouldUpdateAProjectNoteWithPartialFields($field, $expected)
+    {
+        $user = factory(User::class, 10)->create();
+        $client = factory(Client::class, 10)->create();
+
+        $project = factory(Project::class)->create();
+
+        $note = App::make(ProjectNote::class);
+        $note->title = 'Original Title';
+        $note->note = 'Original Note';
+        
+        $project->notes()->save($note);
+
+        $this->put("/project/{$project->id}/note/{$note->id}", [$field => $expected])
+            ->seeJson([
+                $field => $expected
+            ]);
+    }
+
+    public function getNoteFields()
+    {
+        return [
+            ['title', 'Faker Title Updated'],
+            ['note', 'Faker Note Updated']
+        ];
+    }
 }

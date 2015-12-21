@@ -5,6 +5,7 @@ namespace CodeProject\Services;
 use CodeProject\Repositories\ProjectNoteRepository;
 use CodeProject\Validators\ProjectNoteValidator;
 
+use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ProjectNoteService
@@ -67,7 +68,7 @@ class ProjectNoteService
     public function create(array $data)
     {
     	try {
-    		$this->validator->with($data)->passesOrFail();
+    		$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
     		return $this->repository->create($data);
 
@@ -82,7 +83,7 @@ class ProjectNoteService
     public function update(array $data, $id)
     {
     	try {
-    		$this->validator->with($data)->passesOrFail();
+    		$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
     		return $this->repository->update($data, $id);
     		

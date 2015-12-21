@@ -109,4 +109,34 @@ class ProjectTaskControllerTest extends TestCase
                 'name' => "{$task->name}",
             ]);
     }
+
+    /**
+     * @dataProvider getTaskFields
+     */
+    public function testShouldUpdateAProjectTaskWithPartialFields($field, $expected)
+    {
+        $user = factory(User::class, 10)->create();
+        $client = factory(Client::class, 10)->create();
+
+        $project = factory(Project::class)->create();
+
+        $task = App::make(ProjectTask::class);
+        $task->name = 'Original Name';
+        $task->status = rand(1, 3);
+        
+        $project->tasks()->save($task);
+
+        $this->put("/project/{$project->id}/task/{$task->id}", [$field => $expected])
+            ->seeJson([
+                $field => $expected
+            ]);
+    }
+
+    public function getTaskFields()
+    {
+        return [
+            ['name', 'Faker Name Updated'],
+            ['status', rand(1, 3)]
+        ];
+    }
 }
