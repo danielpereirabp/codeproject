@@ -50,7 +50,7 @@ class ProjectNoteService
         }
     }
 
-    public function delete($id)
+    public function delete($projectId, $id)
     {
         try {
             $this->repository->delete($id);

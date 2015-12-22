@@ -16,6 +16,8 @@ class ProjectTaskController extends Controller
     public function __construct(ProjectTaskService $service)
     {
         $this->service = $service;
+
+        $this->middleware('check-project-permissions', ['except' => ['show', 'index']]);
     }
 
     /**
@@ -70,6 +72,6 @@ class ProjectTaskController extends Controller
      */
     public function destroy($projectId, $id)
     {
-        return $this->service->delete($id);
+        return $this->service->delete($projectId, $id);
     }
 }

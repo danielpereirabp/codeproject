@@ -10,19 +10,15 @@ use CodeProject\Services\ProjectNoteService;
 class ProjectNoteController extends Controller
 {
     /**
-    * @var ProjectNoteRepository
-    */
-    private $repository;
-
-    /**
     * @var ProjectNoteService
     */
     private $service;
 
-    public function __construct(ProjectNoteRepository $repository, ProjectNoteService $service)
+    public function __construct(ProjectNoteService $service)
     {
-        $this->repository = $repository;
         $this->service = $service;
+
+        $this->middleware('check-project-permissions', ['except' => ['show', 'index']]);
     }
 
     /**
@@ -78,6 +74,6 @@ class ProjectNoteController extends Controller
      */
     public function destroy($projectId, $id)
     {
-        return $this->service->delete($id);
+        return $this->service->delete($projectId, $id);
     }
 }

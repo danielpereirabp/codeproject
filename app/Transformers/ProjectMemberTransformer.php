@@ -12,7 +12,7 @@ class ProjectMemberTransformer extends TransformerAbstract
 	{
 		return [
 			'member_id' => $member->id,
-			'name' => $member->name
+			'name'      => $member->name
 		];
 	}
 }

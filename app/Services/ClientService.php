@@ -5,6 +5,7 @@ namespace CodeProject\Services;
 use CodeProject\Repositories\ClientRepository;
 use CodeProject\Validators\ClientValidator;
 
+use Prettus\Validator\Contracts\ValidatorInterface;
 use Prettus\Validator\Exceptions\ValidatorException;
 
 class ClientService
@@ -52,7 +53,7 @@ class ClientService
     public function delete($id)
     {
         try {
-            $this->repository->find($id)->projects()->delete();
+            // $this->repository->find($id)->projects()->delete();
             $this->repository->delete($id);
 
             return ['success' => true];
@@ -68,7 +69,7 @@ class ClientService
     public function create(array $data)
     {
     	try {
-    		$this->validator->with($data)->passesOrFail();
+    		$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_CREATE);
 
     		return $this->repository->create($data);
 
@@ -88,7 +89,7 @@ class ClientService
     public function update(array $data, $id)
     {
     	try {
-    		$this->validator->with($data)->passesOrFail();
+    		$this->validator->with($data)->passesOrFail(ValidatorInterface::RULE_UPDATE);
 
     		return $this->repository->update($data, $id);
     		

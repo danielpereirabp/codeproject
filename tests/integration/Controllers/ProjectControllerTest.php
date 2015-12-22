@@ -67,7 +67,7 @@ class ProjectControllerTest extends TestCase
             'due_date' => date('Y-m-d')
         ];
 
-        $this->post('/project', $data)
+        $this->post('project', $data)
             ->seeJson($data);
 
         $this->seeInDatabase('projects', $data);
@@ -92,7 +92,7 @@ class ProjectControllerTest extends TestCase
 
         //Authorizer::shouldReceive('getResourceOwnerId')->once()->andReturn($project->owner->id);
 
-        $this->put('/project/1', [$field => $expected])
+        $this->put('project/1', [$field => $expected])
             ->seeJson([
                 $field => $expected
             ]);
@@ -105,7 +105,7 @@ class ProjectControllerTest extends TestCase
 
         $project = factory(Project::class)->create();
 
-        $this->get("/project/{$project->id}")
+        $this->get("project/{$project->id}")
             ->seeJson([
                 'data' => []
             ]);
@@ -120,7 +120,7 @@ class ProjectControllerTest extends TestCase
 
         $project = factory(Project::class)->create();
 
-        $this->delete("/project/{$project->id}")
+        $this->delete("project/{$project->id}")
             ->seeJson([
                 'success' => true
             ]);
@@ -141,7 +141,7 @@ class ProjectControllerTest extends TestCase
         $project = factory(Project::class)->create();
         $project->members()->save($member);
 
-        // $this->delete("/project/{$project->id}")
+        // $this->delete("project/{$project->id}")
         //     ->seeJson([
         //         'success' => true
         //     ]);
@@ -172,7 +172,7 @@ class ProjectControllerTest extends TestCase
             'extension' => $uploadedFile->getClientOriginalExtension()
         ]);
 
-        // $this->delete("/project/{$project->id}")
+        // $this->delete("project/{$project->id}")
         //     ->seeJson([
         //         'success' => true
         //     ]);

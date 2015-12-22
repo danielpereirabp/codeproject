@@ -20,7 +20,7 @@ class ProjectFileTransformer extends TransformerAbstract
      */
     public function transform(ProjectFile $model) {
         return [
-            'file_id'    => (int)$model->id,
+            'file_id'    => $model->id,
             'file'       => $model->name,
             'extension'  => $model->extension,
             'created_at' => $model->created_at->toDateTimeString(),

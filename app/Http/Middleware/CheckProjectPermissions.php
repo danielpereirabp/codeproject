@@ -6,7 +6,7 @@ use Closure;
 use CodeProject\Repositories\ProjectRepository;
 use LucaDegasperi\OAuth2Server\Facades\Authorizer;
 
-class CheckProjectOwner
+class CheckProjectPermissions
 {
     /**
      * @var ProjectRepository
@@ -30,7 +30,7 @@ class CheckProjectOwner
         $projectId = $request->project ?: $request->projectId;
         $userId = Authorizer::getResourceOwnerId();
 
-        if ($this->repository->isOwner($projectId, $userId) == false) {
+        if ($this->repository->isOwner($projectId, $userId) == false && $this->repository->isMember($projectId, $userId) == false) {
             return ['error' => 'Access forbidden'];
         }
 

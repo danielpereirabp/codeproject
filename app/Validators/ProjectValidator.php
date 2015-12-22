@@ -9,20 +9,20 @@ class ProjectValidator extends LaravelValidator
 {
 	protected $rules = [
 		ValidatorInterface::RULE_CREATE => [
-			'owner_id' => 'required',
+			'owner_id'  => 'required',
 			'client_id' => 'required',
-			'name' => 'required|max:255',
-			'progress' => 'required',
-			'status' => 'required',
-			'due_date' => 'required'
+			'name'      => 'required|max:255',
+			'progress'  => 'required',
+			'status'    => 'required',
+			'due_date'  => 'required'
 		],
 		ValidatorInterface::RULE_UPDATE => [
-            'owner_id' => 'sometimes|required',
-            'client_id' => 'sometimes|required',
-            'name' => 'sometimes|required',
-            'progress' => 'sometimes|required',
-            'status' => 'sometimes|required',
-            'due_date' => 'sometimes|required',
+			'owner_id'  => 'sometimes|required',
+			'client_id' => 'sometimes|required',
+			'name'      => 'sometimes|required|max:255',
+			'progress'  => 'sometimes|required',
+			'status'    => 'sometimes|required',
+			'due_date'  => 'sometimes|required',
         ]
 	];
 }
