@@ -74,7 +74,7 @@ class ClientControllerTest extends TestCase
 
         $this->get("client/{$client->id}")
             ->seeJson([
-                'client_id' => $client->id
+                'client_id' => "{$client->id}"
             ]);
     }
 

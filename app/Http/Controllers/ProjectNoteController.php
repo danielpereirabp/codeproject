@@ -4,7 +4,6 @@ namespace CodeProject\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use CodeProject\Repositories\ProjectNoteRepository;
 use CodeProject\Services\ProjectNoteService;
 
 class ProjectNoteController extends Controller

@@ -16,6 +16,8 @@ class ProjectMemberController extends Controller
     public function __construct(ProjectMemberService $service)
     {
         $this->service = $service;
+
+        $this->middleware('check-project-owner');
     }
 
     /**

@@ -16,6 +16,8 @@ class ProjectFileController extends Controller
     public function __construct(ProjectFileService $service)
     {
         $this->service = $service;
+
+        $this->middleware('check-project-owner');
     }
 
     /**
