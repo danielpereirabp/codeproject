@@ -35,4 +35,9 @@ class ProjectFileRepositoryEloquent extends BaseRepository implements ProjectFil
     {
         $this->pushCriteria( app(RequestCriteria::class) );
     }
+
+    public function getFiles($projectId)
+    {
+        return $this->findWhere(['project_id' => $projectId]);
+    }
 }

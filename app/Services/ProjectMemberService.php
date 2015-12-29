@@ -3,6 +3,7 @@
 namespace CodeProject\Services;
 
 use CodeProject\Repositories\ProjectRepository;
+use CodeProject\Repositories\ProjectMemberRepository;
 use CodeProject\Validators\ProjectMemberValidator;
 
 use Prettus\Validator\Exceptions\ValidatorException;
@@ -19,10 +20,23 @@ class ProjectMemberService
     */
     private $validator;
 
-    public function __construct(ProjectRepository $repository, ProjectMemberValidator $validator)
+    public function __construct(ProjectRepository $projectRepository, ProjectMemberRepository $memberRepository, ProjectMemberValidator $validator)
     {
-        $this->repository = $repository;
+        $this->projectRepository = $projectRepository;
+        $this->memberRepository = $memberRepository;
         $this->validator = $validator;
+    }
+
+    public function getMembers($projectId)
+    {
+        try {
+            return $this->memberRepository->getMembers($projectId);
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
     }
 
 	public function addMember($data)
@@ -32,7 +46,7 @@ class ProjectMemberService
         	$this->validator->with($data)->passesOrFail();
 
             return [
-                'success' => $this->repository->addMember($data['project_id'], $data['user_id'])
+                'success' => $this->projectRepository->addMember($data['project_id'], $data['user_id'])
             ];
 
         } catch (ValidatorException $e) {
@@ -53,7 +67,7 @@ class ProjectMemberService
         try {
 
             return [
-                'success' => $this->repository->removeMember($projectId, $memberId)
+                'success' => $this->projectRepository->removeMember($projectId, $memberId)
             ];
 
         } catch (\Exception $e) {

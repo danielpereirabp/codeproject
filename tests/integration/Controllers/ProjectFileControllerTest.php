@@ -167,4 +167,23 @@ class ProjectFileControllerTest extends TestCase
         $this->notSeeInDatabase('project_files', ['id' => $projectFile->id]);
         $this->assertFileNotExists( storage_path("app/{$projectFile->id}.{$uploadedFile->getClientOriginalExtension()}") );
     }
+
+    public function testShouldListAllFilesOfProject()
+    {
+        factory(User::class, 10)->create();
+        factory(Client::class, 10)->create();
+
+        $project = factory(Project::class)->create();
+
+        factory(ProjectFile::class, 10)->create([
+            'project_id' => $project->id,
+            'name' => 'test name',
+            'description' => 'test description'
+        ]);
+
+        $jsonResponse = $this->call('GET', "project/{$project->id}/file")->getContent();
+        $responseData = json_decode($jsonResponse);
+
+        $this->assertCount(10, $responseData->data);
+    }
 }

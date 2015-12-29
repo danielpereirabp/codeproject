@@ -53,4 +53,29 @@ class ProjectMemberServiceTest extends TestCase
 		$this->assertArrayHasKey('success', $response);
 		$this->assertTrue($response['success']);
 	}
+
+	public function testShouldListAllMembersOfProject()
+	{
+		$service = App::make(ProjectMemberService::class);
+
+		factory(User::class, 10)->create();
+		factory(Client::class, 10)->create();
+		
+		$project = factory(Project::class)->create();
+
+		$members = $service->getMembers($project->id);
+
+		$this->assertArrayHasKey('data', $members);
+		$this->assertCount(0, $members['data']);
+		
+		$project->members()->attach(factory(User::class)->create()->id);
+		$project->members()->attach(factory(User::class)->create()->id);
+		$project->members()->attach(factory(User::class)->create()->id);
+		$project->members()->attach(factory(User::class)->create()->id);
+
+		$members = $service->getMembers($project->id);
+
+		$this->assertArrayHasKey('data', $members);
+		$this->assertCount(4, $members['data']);
+	}
 }

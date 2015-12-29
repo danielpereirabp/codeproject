@@ -17,7 +17,17 @@ class ProjectFileController extends Controller
     {
         $this->service = $service;
 
-        $this->middleware('check-project-owner');
+        $this->middleware('check-project-owner', ['except' => ['index']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return Response
+     */
+    public function index($projectId)
+    {
+        return $this->service->getFiles($projectId);
     }
 
     /**

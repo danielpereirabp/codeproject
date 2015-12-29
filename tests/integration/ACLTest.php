@@ -172,6 +172,7 @@ class ACLTest extends TestCase
 
 	public function testProjectFileControllerUnauthenticated()
 	{
+		$this->get('project/1/file')->seeJson(['error' => 'invalid_request']);
 		$this->post('project/1/file', [])->seeJson(['error' => 'invalid_request']);
 		$this->delete('project/1/file/1')->seeJson(['error' => 'invalid_request']);
 	}
@@ -193,6 +194,7 @@ class ACLTest extends TestCase
 
 	public function testProjectMemberControllerUnauthenticated()
 	{
+		$this->get('project/1/member')->seeJson(['error' => 'invalid_request']);
 		$this->post('project/1/member', [])->seeJson(['error' => 'invalid_request']);
 		$this->delete('project/1/member/1')->seeJson(['error' => 'invalid_request']);
 	}

@@ -40,6 +40,18 @@ class ProjectFileService
         $this->storage = $storage;
     }
 
+    public function getFiles($projectId)
+    {
+        try {
+            return $this->repository->getFiles($projectId);
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
     public function create(array $data)
     {
         try {
