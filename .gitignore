@@ -5,3 +5,4 @@ Homestead.yaml
 .idea
 .coverage
 .env.testing
+resources/bower_components
