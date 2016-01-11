@@ -75,7 +75,7 @@
 		<script src="{{ asset('build/js/vendor/angular-resource.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/vendor/angular-animate.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/vendor/angular-messages.min.js') }}" type="text/javascript"></script>
-		<script src="{{ asset('build/js/vendor/ui-bootstrap.min.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/vendor/ui-bootstrap-tpls.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/vendor/navbar.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/vendor/angular-cookies.min.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/vendor/query-string.js') }}" type="text/javascript"></script>
@@ -92,14 +92,23 @@
 		<script src="{{ asset('build/js/controllers/client/clientEdit.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/controllers/client/clientRemove.js') }}" type="text/javascript"></script>
 
+		<script src="{{ asset('build/js/controllers/project/projectList.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/controllers/project/projectNew.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/controllers/project/projectEdit.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/controllers/project/projectRemove.js') }}" type="text/javascript"></script>
+
 		<script src="{{ asset('build/js/controllers/project-note/projectNoteShow.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/controllers/project-note/projectNoteList.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/controllers/project-note/projectNoteNew.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/controllers/project-note/projectNoteEdit.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/controllers/project-note/projectNoteRemove.js') }}" type="text/javascript"></script>
 
+		<!-- FILTERS !-->
+		<script src="{{ asset('build/js/filters/date-br.js') }}" type="text/javascript"></script>
+
 		<!-- SERVICES !-->
 		<script src="{{ asset('build/js/services/client.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/services/project.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/services/projectNote.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/services/user.js') }}" type="text/javascript"></script>
 	@else
