@@ -17,7 +17,7 @@ class ProjectFileController extends Controller
     {
         $this->service = $service;
 
-        $this->middleware('check-project-owner', ['except' => ['index']);
+        $this->middleware('check-project-permissions', ['except' => ['show', 'index']]);
     }
 
     /**
@@ -36,17 +36,46 @@ class ProjectFileController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $projectId)
     {
         $data = [
             'file' => $request->file('file'),
             'extension' => $request->file('file')->getClientOriginalExtension(),
             'name' => $request->name,
             'description' => $request->description,
-            'project_id' => $request->project_id
+            'project_id' => $projectId
         ];
 
         return $this->service->create($data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $projectId
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($projectId, $id)
+    {
+        return $this->service->find($projectId, $id);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  Request  $request
+     * @param  int  $id
+     * @return Response
+     */
+    public function update(Request $request, $projectId, $id)
+    {
+        $data = [
+            'name' => $request->name,
+            'description' => $request->description
+        ];
+
+        return $this->service->update($data, $id);
     }
 
     /**
@@ -55,8 +84,22 @@ class ProjectFileController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function destroy($id)
+    public function destroy($projectId, $id)
     {
-        return $this->service->delete($id);
+        return $this->service->delete($projectId, $id);
+    }
+
+    public function showFile($projectId, $id)
+    {
+        $filePath = $this->service->getFilePath($id);
+        $fileContent = file_get_contents($filePath);
+        $file64 = base64_encode($fileContent);
+
+        return [
+            'file' => $file64,
+            'size' => filesize($filePath),
+            'name' => basename($filePath)
+            // 'name' => $this->service->getFileName($id)
+        ];
     }
 }
