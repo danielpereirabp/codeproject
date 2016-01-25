@@ -17,7 +17,7 @@ class ProjectMemberController extends Controller
     {
         $this->service = $service;
 
-        $this->middleware('check-project-owner', ['except' => ['index']);
+        $this->middleware('check-project-owner', ['except' => ['show', 'index']]);
     }
 
     /**
@@ -36,9 +36,24 @@ class ProjectMemberController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $projectId)
     {
-        return $this->service->addMember($request->all());
+        $data = $request->all();
+        $data['project_id'] = $projectId;
+
+        return $this->service->addMember($data);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $projectId
+     * @param  int  $id
+     * @return Response
+     */
+    public function show($projectId, $id)
+    {
+        return $this->service->getMember($projectId, $id);
     }
 
     /**

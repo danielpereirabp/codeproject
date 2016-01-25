@@ -100,6 +100,11 @@ class ProjectNoteService
     			'error' => true,
     			'message' => $e->getMessageBag()
     		];
-    	}
+    	} catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
     }
 }

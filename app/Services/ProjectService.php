@@ -29,7 +29,8 @@ class ProjectService
     public function all()
     {
         try {
-            return $this->repository->with(['owner', 'client', 'members'])->all();
+            // return $this->repository->with(['owner', 'client', 'members'])->all();
+            return $this->repository->findWithOwnerAndMember(\Authorizer::getResourceOwnerId());
         } catch (\Exception $e) {
             return [
                 "error" => true,

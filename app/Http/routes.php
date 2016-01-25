@@ -43,6 +43,7 @@ Route::group(['middleware' => 'oauth'], function () {
 
         Route::get('{projectId}/member', 'ProjectMemberController@index');
         Route::post('{projectId}/member', 'ProjectMemberController@store');
+        Route::get('{projectId}/member/{id}', 'ProjectMemberController@show');
         Route::delete('{projectId}/member/{id}', 'ProjectMemberController@destroy');
 
         Route::get('{projectId}/file', 'ProjectFileController@index');
@@ -55,5 +56,6 @@ Route::group(['middleware' => 'oauth'], function () {
     });
 
     Route::get('user/authenticated', 'UserController@authenticated');
+    Route::resource('user', 'UserController', ['except' => ['create', 'edit']]);
 
 });

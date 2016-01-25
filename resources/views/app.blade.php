@@ -109,6 +109,14 @@
 		<script src="{{ asset('build/js/controllers/project-file/projectFileEdit.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/controllers/project-file/projectFileRemove.js') }}" type="text/javascript"></script>
 
+		<script src="{{ asset('build/js/controllers/project-task/projectTaskList.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/controllers/project-task/projectTaskNew.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/controllers/project-task/projectTaskEdit.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/controllers/project-task/projectTaskRemove.js') }}" type="text/javascript"></script>
+
+		<script src="{{ asset('build/js/controllers/project-member/projectMemberList.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/controllers/project-member/projectMemberRemove.js') }}" type="text/javascript"></script>
+
 		<!-- DIRECTIVES !-->
 		<script src="{{ asset('build/js/directives/projectFileDownload.js') }}" type="text/javascript"></script>
 
@@ -121,6 +129,8 @@
 		<script src="{{ asset('build/js/services/project.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/services/projectNote.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/services/projectFile.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/services/projectTask.js') }}" type="text/javascript"></script>
+		<script src="{{ asset('build/js/services/projectMember.js') }}" type="text/javascript"></script>
 		<script src="{{ asset('build/js/services/user.js') }}" type="text/javascript"></script>
 	@else
 		<script src="{{ elixir('js/all.js') }}" type="text/javascript"></script>

@@ -18,6 +18,12 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamS
 				{value: 3, label: 'Concluído'}
 			]
 		},
+		projectTask: {
+			status: [
+				{value: 1, label: 'Incompleta'},
+				{value: 2, label: 'Completa'}
+			]
+		},
 		urls: {
 			projectFile: '/project/{{id}}/file/{{idFile}}'
 		},
@@ -134,6 +140,30 @@ app.config([
 			.when('/project/:id/files/:idFile/remove', {
 				templateUrl: 'build/views/project-file/remove.html',
 				controller: 'ProjectFileRemoveController'
+			})
+			.when('/project/:id/tasks', {
+				templateUrl: 'build/views/project-task/list.html',
+				controller: 'ProjectTaskListController'
+			})
+			.when('/project/:id/tasks/new', {
+				templateUrl: 'build/views/project-task/new.html',
+				controller: 'ProjectTaskNewController'
+			})
+			.when('/project/:id/tasks/:idTask/edit', {
+				templateUrl: 'build/views/project-task/edit.html',
+				controller: 'ProjectTaskEditController'
+			})
+			.when('/project/:id/tasks/:idTask/remove', {
+				templateUrl: 'build/views/project-task/remove.html',
+				controller: 'ProjectTaskRemoveController'
+			})
+			.when('/project/:id/members', {
+				templateUrl: 'build/views/project-member/list.html',
+				controller: 'ProjectMemberListController'
+			})
+			.when('/project/:id/members/:idMember/remove', {
+				templateUrl: 'build/views/project-member/remove.html',
+				controller: 'ProjectMemberRemoveController'
 			})
 		;
 

@@ -16,6 +16,18 @@ class UserService
         $this->repository = $repository;
     }
 
+    public function all()
+    {
+        try {
+            return $this->repository->all();
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
     public function find($id)
     {
         try {

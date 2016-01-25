@@ -39,6 +39,26 @@ class ProjectMemberService
         }
     }
 
+    public function getMember($projectId, $id)
+    {
+        try {
+            $data = $this->memberRepository->findWhere(['project_id' => $projectId, 'member_id' => $id]);
+
+            if (isset($data['data']) && count($data['data'])) {
+                return [
+                    'data' => current($data['data'])
+                ];
+            }
+
+            return $data;
+        } catch (\Exception $e) {
+            return [
+                "error" => true,
+                "message" => $e->getMessage()
+            ];
+        }
+    }
+
 	public function addMember($data)
     {
         try {
