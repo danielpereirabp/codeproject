@@ -1,7 +1,8 @@
 var app = angular.module('app', [
 	'ngRoute', 'angular-oauth2', 'app.controllers', 'app.services', 'app.filters', 'app.directives',
 	'ui.bootstrap.typeahead', 'ui.bootstrap.datepicker', 'ui.bootstrap.tpls', 'ui.bootstrap.modal',
-	'ngFileUpload', 'http-auth-interceptor'
+	'ngFileUpload', 'http-auth-interceptor', 'angularUtils.directives.dirPagination',
+	'mgcrea.ngStrap.navbar', 'ui.bootstrap.dropdown', 'ui.bootstrap.tabs'
 ]);
 
 angular.module('app.controllers', ['ngMessages']);
@@ -40,7 +41,7 @@ app.provider('appConfig', ['$httpParamSerializerProvider', function ($httpParamS
 				if (headersGetter['content-type'] == 'application/json' ||
 					headersGetter['content-type'] == 'text/json') {
 					var dataJson = JSON.parse(data);
-					if (dataJson.hasOwnProperty('data')) {
+					if (dataJson.hasOwnProperty('data') && Object.keys(dataJson).length == 1) {
 						dataJson = dataJson.data;
 					}
 					return dataJson;
@@ -88,9 +89,15 @@ app.config([
 				templateUrl: 'build/views/home.html',
 				controller: 'HomeController'
 			})
+			.when('/clients/dashboard', {
+				templateUrl: 'build/views/client/dashboard.html',
+				controller: 'ClientDashboardController',
+				title: 'Clients'
+			})
 			.when('/clients', {
 				templateUrl: 'build/views/client/list.html',
-				controller: 'ClientListController'
+				controller: 'ClientListController',
+				title: 'Clients'
 			})
 			.when('/clients/new', {
 				templateUrl: 'build/views/client/new.html',
@@ -104,9 +111,15 @@ app.config([
 				templateUrl: 'build/views/client/remove.html',
 				controller: 'ClientRemoveController'
 			})
+			.when('/projects/dashboard', {
+				templateUrl: 'build/views/project/dashboard.html',
+				controller: 'ProjectDashboardController',
+				title: 'Projects'
+			})
 			.when('/projects', {
 				templateUrl: 'build/views/project/list.html',
-				controller: 'ProjectListController'
+				controller: 'ProjectListController',
+				title: 'Projects'
 			})
 			.when('/projects/new', {
 				templateUrl: 'build/views/project/new.html',
@@ -205,6 +218,10 @@ app.run(['$rootScope', '$location', '$http', '$modal', 'httpBuffer', 'OAuth', fu
 				$location.path('login');
 			}
 		}
+	});
+
+	$rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+		$rootScope.pageTitle = current.$$route.title;
 	});
 
     $rootScope.$on('oauth:error', function(event, data) {

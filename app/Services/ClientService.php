@@ -26,10 +26,10 @@ class ClientService
         $this->validator = $validator;
     }
 
-    public function all()
+    public function all($limit = null)
     {
         try {
-            return $this->repository->all();
+            return $this->repository->paginate($limit);
         } catch (\Exception $e) {
             return [
                 "error" => true,

@@ -26,11 +26,11 @@ class ProjectService
         $this->validator = $validator;
     }
 
-    public function all()
+    public function all($limit = null)
     {
         try {
             // return $this->repository->with(['owner', 'client', 'members'])->all();
-            return $this->repository->findWithOwnerAndMember(\Authorizer::getResourceOwnerId());
+            return $this->repository->findWithOwnerAndMember(\Authorizer::getResourceOwnerId(), $limit);
         } catch (\Exception $e) {
             return [
                 "error" => true,

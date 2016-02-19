@@ -28,9 +28,9 @@ class ProjectController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->service->all();
+        return $this->service->all($request->query->get('limit'));
     }
 
     /**
